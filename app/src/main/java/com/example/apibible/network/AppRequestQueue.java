@@ -1,4 +1,4 @@
-package com.example.apibible;
+package com.example.apibible.network;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

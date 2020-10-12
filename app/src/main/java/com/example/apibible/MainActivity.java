@@ -9,6 +9,10 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.apibible.bible.Bible;
+import com.example.apibible.network.ApiBibleRequest;
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +20,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+// #2379be - primary
+//
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView lv;
     ArrayList<HashMap<String, String>> bibleList;
+
+    ArrayList<Bible> bibleArrayList;
 
     ////////////////////// onCreate
     @Override
@@ -43,18 +51,37 @@ public class MainActivity extends AppCompatActivity {
     public void setBibleList() {
 
         bibleList = new ArrayList<>();
-        lv = (ListView) findViewById(R.id.list);
+        bibleArrayList = new ArrayList<>();
+        lv = findViewById(R.id.list);
 
 
-        // end onSuccessResponse
         apiBibleRequest.getAllBibles(response -> {
             try {
                 // Getting JSON Array node
                 JSONArray bibles = response.getJSONArray("data");
 
-                // looping through All Contacts
+                Gson gson = new Gson();
+
+                // looping through All Bibles
                 for (int i = 0; i < bibles.length(); i++) {
-                    JSONObject c = bibles.getJSONObject(i);
+
+                    JSONObject b = bibles.getJSONObject(i);
+                    Bible bible = gson.fromJson(b.toString(), Bible.class);
+                    bibleArrayList.add(bible);
+
+                    // tmp hash map for single bible
+                    HashMap<String, String> bibleHash = new HashMap<>();
+
+                    // adding each child node to HashMap key => value
+                    bibleHash.put("id", bible.getId());
+                    bibleHash.put("name", bible.getName());
+                    bibleHash.put("abbreviation", bible.getDescriptionLocal());
+
+
+                    // adding contact to bible list
+                    bibleList.add(bibleHash);
+
+/*                    JSONObject c = bibles.getJSONObject(i);
                     String id = c.getString("id");
                     String name = c.getString("name");
                     String abbreviation = c.getString("abbreviation");
@@ -67,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
                     bible.put("name", name);
                     bible.put("abbreviation", abbreviation);
 
-                    // adding contact to contact list
-                    bibleList.add(bible);
+                    // adding contact to bible list
+                    bibleList.add(bible);*/
                 }
             } catch (final JSONException e) {
                 Log.e(TAG, "Json parsing error: " + e.getMessage());
@@ -82,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
             ListAdapter adapter = new SimpleAdapter(MainActivity.this, bibleList,
                     R.layout.bible_list_item, new String[]{ "name","abbreviation"},
                     new int[]{R.id.name, R.id.abbreviation});
+
             lv.setAdapter(adapter);
 
         });

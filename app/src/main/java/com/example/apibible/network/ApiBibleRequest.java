@@ -1,4 +1,4 @@
-package com.example.apibible;
+package com.example.apibible.network;
 
 import android.content.Context;
 
@@ -16,6 +16,10 @@ import java.util.Map;
 
 
 public class ApiBibleRequest {
+
+    public interface VolleyCallback {
+        void onSuccessResponse(JSONObject result);
+    }
 
     private final String url_base = "https://api.scripture.api.bible";
     private final String api_key = "9bea9ab8db7fd98f1f0ebb9cd98b8001";
