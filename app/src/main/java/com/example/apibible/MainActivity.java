@@ -3,10 +3,13 @@ package com.example.apibible;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+
+import com.example.apibible.util.SimpleItemTouchHelperCallback;
 
 // #2379be - primary
 //
@@ -43,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
             bibleAdapter.setBibles(bibleList);
         });
 
+        // set up touch helper for moving and swiping
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(bibleAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(recyclerView);
 
 
 //        // get instance for making api requests

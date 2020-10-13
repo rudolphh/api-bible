@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">API Bible</string>
+    <string name="fav_button">favorite</string>
 </resources>
