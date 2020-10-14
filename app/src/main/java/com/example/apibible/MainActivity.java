@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         touchHelper.attachToRecyclerView(recyclerView);
 
 
+
 //        // get instance for making api requests
 //        apiBibleRequest = new ApiBibleRequest(getApplicationContext());
 //        setBibleList();

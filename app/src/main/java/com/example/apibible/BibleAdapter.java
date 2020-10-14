@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apibible.bible.Bible;
@@ -22,6 +23,8 @@ import java.util.List;
 public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
         implements ItemTouchHelperAdapter {
 
+    private static RecyclerView recyclerView;
+
     private List<Bible> bibles = new ArrayList<>();
     private Context context;
 
@@ -31,6 +34,9 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
         context = parent.getContext();
         View bibleView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.bible_item, parent, false);
+
+
+        recyclerView = parent.findViewById(R.id.recycler_view);
 
         return new BibleHolder(bibleView);
     }
@@ -46,7 +52,12 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
 
         holder.iv_fav.setOnClickListener(view -> {
             onItemMove(position, 0);
-            notifyItemChanged(position);
+            notifyItemRangeChanged(0, position+1);
+
+            LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+            assert layoutManager != null;
+            layoutManager.scrollToPositionWithOffset(0, 0);
+
             Log.i("position", String.valueOf(position));
         });
 
@@ -70,6 +81,7 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
     public void onItemDismiss(int position) {
         bibles.remove(position);
         notifyItemRemoved(position);
+        notifyItemRangeChanged(position, getItemCount());
     }
 
     @Override
