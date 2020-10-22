@@ -1,13 +1,11 @@
-package com.example.apibible;
+package com.example.apibible.bible;
 
 import android.app.Application;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.apibible.bible.Bible;
+import com.example.apibible.bible.models.Bible;
 import com.example.apibible.network.ApiBibleRequest;
 import com.google.gson.Gson;
 
@@ -23,7 +21,7 @@ public class BibleRepository {
     private MutableLiveData<List<Bible>> allBibles = new MutableLiveData<>();
     private ApiBibleRequest apiBibleRequest;
 
-    BibleRepository(Application application){
+    public BibleRepository(Application application){
 
         apiBibleRequest = new ApiBibleRequest(application.getApplicationContext());
 

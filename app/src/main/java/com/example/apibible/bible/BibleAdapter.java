@@ -1,7 +1,6 @@
-package com.example.apibible;
+package com.example.apibible.bible;
 
 import android.content.Context;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.apibible.bible.Bible;
+import com.example.apibible.R;
+import com.example.apibible.bible.models.Bible;
 import com.example.apibible.util.ItemTouchHelperAdapter;
 
 import java.util.ArrayList;

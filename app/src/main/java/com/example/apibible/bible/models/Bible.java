@@ -1,4 +1,4 @@
-package com.example.apibible.bible;
+package com.example.apibible.bible.models;
 
 import java.util.HashMap;
 import java.util.List;
