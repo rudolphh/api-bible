@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,19 @@ public class BiblesFragment extends Fragment {
 
         biblesViewModel.getAllBibles().observe(this, bibleList -> {
             bibleAdapter.setBibles(bibleList);
+
+            String bibleId;
+
+            for (int i = 0; i < bibleList.size(); i ++){
+
+                int finalI = i;
+                bibleId = bibleList.get(i).getId();
+                this.biblesViewModel.countAllBooks(bibleId).observe(this, number -> {
+                    if(number >= 73) {
+                        Log.i(bibleList.get(finalI).getName() + " books : ", number.toString());
+                    }
+                });
+            }
         });
 
         // set up touch helper for moving and swiping

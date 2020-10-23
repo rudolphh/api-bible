@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.apibible.bible.models.Bible;
+import com.example.apibible.book.Book;
 
 import java.util.List;
 
@@ -23,5 +24,10 @@ public class BiblesViewModel extends AndroidViewModel {
     public MutableLiveData<List<Bible>> getAllBibles(){
 
         return allBibles;
+    }
+
+    public MutableLiveData<Integer> countAllBooks(String bibleId){
+
+        return bibleRepository.getBookCount(bibleId);
     }
 }

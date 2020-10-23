@@ -6,9 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 
 
-// #2379be - primary
-//
-
 public class MainActivity extends AppCompatActivity {
 
 
@@ -22,15 +19,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
-
-
-//        // get instance for making api requests
-//        apiBibleRequest = new ApiBibleRequest(getApplicationContext());
-//        setBibleList();
-
     }// end onCreate
-
 
 }
