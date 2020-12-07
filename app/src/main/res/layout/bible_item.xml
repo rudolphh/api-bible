@@ -8,17 +8,27 @@
     android:layout_marginEnd="8dp">
 
 
-    <ImageView
-        android:id="@+id/iv_fav"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:contentDescription="@string/fav_button"
         android:paddingStart="17dp"
         android:paddingEnd="8dp"
         android:paddingTop="8dp"
-        android:paddingBottom="17dp"
-        android:src="@drawable/ic_baseline_star_border_24" />
+        android:paddingBottom="17dp">
+
+        <ToggleButton
+            android:id="@+id/tb_fav"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+
+            android:background="@drawable/button_favorite"
+            android:checked="false"
+            android:text=""
+            android:textOff=""
+            android:textOn="" />
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -38,11 +48,9 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="name"
+                android:text="@string/filler_name"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/colorPrimary" />
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -56,7 +64,7 @@
                 android:id="@+id/tv_abbrev"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="abbreviation"
+                android:text="@string/filler_abbrev"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/colorPrimary" />
         </LinearLayout>
@@ -76,7 +84,7 @@
                 android:ellipsize="end"
 
                 android:gravity="start"
-                android:text="description"
+                android:text="@string/filler_desc"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         </LinearLayout>

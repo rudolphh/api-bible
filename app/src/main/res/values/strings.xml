@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">API Bible</string>
     <string name="fav_button">favorite</string>
+    <string name="filler_name">name</string>
+    <string name="filler_abbrev">abbreviation</string>
+    <string name="filler_desc">description</string>
 </resources>

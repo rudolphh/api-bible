@@ -1,13 +1,14 @@
 package com.example.apibible;
 
 import android.content.Context;
-import android.text.Html;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -50,7 +51,8 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
         holder.tvAbbrev.setText(currentBible.getAbbreviation());
         holder.tvDesc.setText(currentBible.getDescription());
 
-        holder.iv_fav.setOnClickListener(view -> {
+        holder.tb_fav.setOnClickListener(view -> {
+
             onItemMove(position, 0);
             notifyItemRangeChanged(0, position+1);
 
@@ -95,6 +97,7 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
                 Collections.swap(bibles, i, i - 1);
             }
         }
+
         notifyItemMoved(fromPosition, toPosition);
         return true;
     }
@@ -105,7 +108,7 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
 
         private View bibleView;
 
-        private ImageView iv_fav;
+        private ToggleButton tb_fav;
         private TextView tvName;
         private TextView tvAbbrev;
         private TextView tvDesc;
@@ -115,7 +118,7 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
 
             bibleView = itemView;// handle on the bible cardView item
 
-            iv_fav = bibleView.findViewById(R.id.iv_fav);
+            tb_fav = bibleView.findViewById(R.id.tb_fav);
             tvName = bibleView.findViewById(R.id.tv_name);
             tvAbbrev = bibleView.findViewById(R.id.tv_abbrev);
             tvDesc = bibleView.findViewById(R.id.tv_desc);
