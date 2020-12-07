@@ -1,22 +1,21 @@
-package com.example.apibible;
+package com.example.apibible.bible;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.apibible.bible.Bible;
+import com.example.apibible.bible.models.Bible;
+import com.example.apibible.book.Book;
 
 import java.util.List;
 
-public class BibleViewModel extends AndroidViewModel {
-
+public class BiblesViewModel extends AndroidViewModel {
     private BibleRepository bibleRepository;
     private MutableLiveData<List<Bible>> allBibles;
 
-    public BibleViewModel(@NonNull Application application) {
+    public BiblesViewModel(@NonNull Application application) {
         super(application);
         bibleRepository = new BibleRepository(application);
         allBibles = bibleRepository.getAllBibles();
@@ -25,5 +24,10 @@ public class BibleViewModel extends AndroidViewModel {
     public MutableLiveData<List<Bible>> getAllBibles(){
 
         return allBibles;
+    }
+
+    public MutableLiveData<Integer> countAllBooks(String bibleId){
+
+        return bibleRepository.getBookCount(bibleId);
     }
 }

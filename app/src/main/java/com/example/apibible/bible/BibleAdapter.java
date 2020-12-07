@@ -1,4 +1,4 @@
-package com.example.apibible;
+package com.example.apibible.bible;
 
 import android.content.Context;
 
@@ -14,7 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.apibible.bible.Bible;
+import com.example.apibible.R;
+import com.example.apibible.bible.models.Bible;
 import com.example.apibible.util.ItemTouchHelperAdapter;
 
 import java.util.ArrayList;
@@ -97,7 +98,6 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
                 Collections.swap(bibles, i, i - 1);
             }
         }
-
         notifyItemMoved(fromPosition, toPosition);
         return true;
     }
