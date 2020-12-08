@@ -1,4 +1,4 @@
-package com.example.apibible.bible;
+package com.example.apibible.bible.adapters;
 
 import android.content.Context;
 
@@ -26,9 +26,14 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
         implements ItemTouchHelperAdapter {
 
     private static RecyclerView recyclerView;
+    private static RecyclerViewClickListener mListener;
 
     private List<Bible> bibles = new ArrayList<>();
     private Context context;
+
+    public BibleAdapter(RecyclerViewClickListener listener){
+        mListener = listener;
+    }
 
     @NonNull
     @Override
@@ -40,34 +45,18 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
 
         recyclerView = parent.findViewById(R.id.recycler_view);
 
-        return new BibleHolder(bibleView);
+        return new BibleHolder(bibleView, mListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BibleHolder holder, int position) {
 
         Bible currentBible = bibles.get(position);
-
-        holder.tvName.setText(currentBible.getName());
-        holder.tvAbbrev.setText(currentBible.getAbbreviation());
-        holder.tvDesc.setText(currentBible.getDescription());
-
-        holder.tb_fav.setOnClickListener(view -> {
-
-            onItemMove(position, 0);
-            notifyItemRangeChanged(0, position+1);
-
-            LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-            assert layoutManager != null;
-            layoutManager.scrollToPositionWithOffset(0, 0);
-
-            Log.i("position", String.valueOf(position));
-        });
-
-        // when a bible cardView is clicked, go to the books activity (or fragment)
-        holder.bibleView.setOnClickListener(view -> {
-
-        });
+        if(holder instanceof BibleHolder) {
+            holder.tvName.setText(currentBible.getName());
+            holder.tvAbbrev.setText(currentBible.getAbbreviation());
+            holder.tvDesc.setText(currentBible.getDescription());
+        }
     }
 
     @Override
@@ -102,28 +91,38 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
         return true;
     }
 
+    public interface RecyclerViewClickListener {
+        void onClick(View view, int position);
+    }
 
-
-    static class BibleHolder extends RecyclerView.ViewHolder{
+    static class BibleHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private View bibleView;
+        private RecyclerViewClickListener mListener;
 
         private ToggleButton tb_fav;
         private TextView tvName;
         private TextView tvAbbrev;
         private TextView tvDesc;
 
-        public BibleHolder(@NonNull View itemView) {
+        public BibleHolder(@NonNull View itemView, RecyclerViewClickListener listener) {
             super(itemView);
+            mListener = listener;
 
             bibleView = itemView;// handle on the bible cardView item
+            //bibleView.setOnClickListener(this);
 
             tb_fav = bibleView.findViewById(R.id.tb_fav);
+            tb_fav.setOnClickListener(this);
             tvName = bibleView.findViewById(R.id.tv_name);
             tvAbbrev = bibleView.findViewById(R.id.tv_abbrev);
             tvDesc = bibleView.findViewById(R.id.tv_desc);
 
         }
 
+        @Override
+        public void onClick(View view) {
+            mListener.onClick(view, getAdapterPosition());
+        }
     }
 }

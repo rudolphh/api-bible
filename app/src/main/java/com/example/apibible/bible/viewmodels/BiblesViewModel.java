@@ -1,4 +1,4 @@
-package com.example.apibible.bible;
+package com.example.apibible.bible.viewmodels;
 
 import android.app.Application;
 
@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.apibible.bible.BibleRepository;
 import com.example.apibible.bible.models.Bible;
 import com.example.apibible.book.Book;
 

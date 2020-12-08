@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <fragment android:name="com.example.apibible.bible.BiblesFragment"
+    <fragment android:name="com.example.apibible.bible.fragments.BiblesFragment"
         android:id="@+id/bibles_fragment"
         android:layout_weight="1"
         android:layout_width="match_parent"

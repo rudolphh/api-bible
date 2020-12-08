@@ -1,4 +1,4 @@
-package com.example.apibible.bible;
+package com.example.apibible.bible.fragments;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,8 +15,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.apibible.R;
+import com.example.apibible.bible.adapters.BibleAdapter;
+import com.example.apibible.bible.viewmodels.BiblesViewModel;
 import com.example.apibible.util.SimpleItemTouchHelperCallback;
 
 public class BiblesFragment extends Fragment {
@@ -43,7 +46,11 @@ public class BiblesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // set up adapter
-        BibleAdapter bibleAdapter = new BibleAdapter();
+        BibleAdapter.RecyclerViewClickListener listener = (view, position) -> {
+            Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_LONG).show();
+        };
+
+        BibleAdapter bibleAdapter = new BibleAdapter(listener);
         recyclerView.setAdapter(bibleAdapter);
 
         // get viewModel instance
