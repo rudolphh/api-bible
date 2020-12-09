@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -30,10 +31,10 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
 
     private List<Bible> bibles = new ArrayList<>();
     private Context context;
-
-    public BibleAdapter(RecyclerViewClickListener listener){
-        mListener = listener;
-    }
+//
+//    public BibleAdapter(RecyclerViewClickListener listener){
+//        mListener = listener;
+//    }
 
     @NonNull
     @Override
@@ -42,16 +43,27 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
         View bibleView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.bible_item, parent, false);
 
-
         recyclerView = parent.findViewById(R.id.recycler_view);
 
-        return new BibleHolder(bibleView, mListener);
+        Log.i("createViewHolder", "create view holder called");
+
+        return new BibleHolder(bibleView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BibleHolder holder, int position) {
 
         Bible currentBible = bibles.get(position);
+        boolean isFavorite = currentBible.getAdditionalProperties().get("FavoriteChecked").equals(true);
+        Log.i("Current FavoriteChecked", "Current FavoriteChecked for " + currentBible.getName() + " - " + isFavorite);
+
+        holder.tb_fav.setChecked(isFavorite);
+
+        holder.tb_fav.setOnClickListener(view -> {
+            currentBible.setAdditionalProperty("FavoriteChecked", true);
+            Log.i("FavoriteChecked", "On Bible : " + currentBible.getName() + " - true");
+        });
+
         if(holder instanceof BibleHolder) {
             holder.tvName.setText(currentBible.getName());
             holder.tvAbbrev.setText(currentBible.getAbbreviation());
@@ -66,6 +78,9 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
 
     public void setBibles(List<Bible> bibles){
         this.bibles = bibles;
+        for(Bible bible : bibles){
+            bible.setAdditionalProperty("FavoriteChecked", false);
+        }
         notifyDataSetChanged();
     }
 
@@ -105,15 +120,15 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
         private TextView tvAbbrev;
         private TextView tvDesc;
 
-        public BibleHolder(@NonNull View itemView, RecyclerViewClickListener listener) {
+        public BibleHolder(@NonNull View itemView) {
             super(itemView);
-            mListener = listener;
+            //mListener = listener;
 
             bibleView = itemView;// handle on the bible cardView item
             //bibleView.setOnClickListener(this);
 
             tb_fav = bibleView.findViewById(R.id.tb_fav);
-            tb_fav.setOnClickListener(this);
+            //tb_fav.setOnClickListener(this);
             tvName = bibleView.findViewById(R.id.tv_name);
             tvAbbrev = bibleView.findViewById(R.id.tv_abbrev);
             tvDesc = bibleView.findViewById(R.id.tv_desc);

@@ -46,11 +46,11 @@ public class BiblesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // set up adapter
-        BibleAdapter.RecyclerViewClickListener listener = (view, position) -> {
-            Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_LONG).show();
-        };
+//        BibleAdapter.RecyclerViewClickListener listener = (view, position) -> {
+//            Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_LONG).show();
+//        };
 
-        BibleAdapter bibleAdapter = new BibleAdapter(listener);
+        BibleAdapter bibleAdapter = new BibleAdapter();
         recyclerView.setAdapter(bibleAdapter);
 
         // get viewModel instance
@@ -60,18 +60,18 @@ public class BiblesFragment extends Fragment {
         biblesViewModel.getAllBibles().observe(this, bibleList -> {
             bibleAdapter.setBibles(bibleList);
 
-            String bibleId;
-
-            for (int i = 0; i < bibleList.size(); i ++){
-
-                int finalI = i;
-                bibleId = bibleList.get(i).getId();
-                this.biblesViewModel.countAllBooks(bibleId).observe(this, number -> {
-                    if(number >= 73) {
-                        Log.i(bibleList.get(finalI).getName() + " books : ", number.toString());
-                    }
-                });
-            }
+//            String bibleId;
+//
+//            for (int i = 0; i < bibleList.size(); i ++){
+//
+//                int finalI = i;
+//                bibleId = bibleList.get(i).getId();
+//                this.biblesViewModel.countAllBooks(bibleId).observe(this, number -> {
+//                    if(number >= 73) {
+//                        Log.i(bibleList.get(finalI).getName() + " books : ", number.toString());
+//                    }
+//                });
+//            }
         });
 
         // set up touch helper for moving and swiping
