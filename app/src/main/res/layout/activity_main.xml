@@ -10,10 +10,9 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <fragment android:name="com.example.apibible.bible.fragments.BiblesFragment"
-        android:id="@+id/bibles_fragment"
-        android:layout_weight="1"
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

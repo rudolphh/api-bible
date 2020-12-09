@@ -4,4 +4,6 @@
     <string name="filler_name">name</string>
     <string name="filler_abbrev">abbreviation</string>
     <string name="filler_desc">description</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

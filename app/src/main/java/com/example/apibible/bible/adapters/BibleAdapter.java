@@ -31,10 +31,10 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
 
     private List<Bible> bibles = new ArrayList<>();
     private Context context;
-//
-//    public BibleAdapter(RecyclerViewClickListener listener){
-//        mListener = listener;
-//    }
+
+    public BibleAdapter(RecyclerViewClickListener listener){
+        mListener = listener;
+    }
 
     @NonNull
     @Override
@@ -47,7 +47,7 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
 
         Log.i("createViewHolder", "create view holder called");
 
-        return new BibleHolder(bibleView);
+        return new BibleHolder(bibleView, mListener);
     }
 
     @Override
@@ -120,12 +120,12 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
         private TextView tvAbbrev;
         private TextView tvDesc;
 
-        public BibleHolder(@NonNull View itemView) {
+        public BibleHolder(@NonNull View itemView, RecyclerViewClickListener listener) {
             super(itemView);
-            //mListener = listener;
+            mListener = listener;
 
             bibleView = itemView;// handle on the bible cardView item
-            //bibleView.setOnClickListener(this);
+            bibleView.setOnClickListener(this);
 
             tb_fav = bibleView.findViewById(R.id.tb_fav);
             //tb_fav.setOnClickListener(this);
