@@ -17,9 +17,13 @@ import android.widget.Toast;
 import com.example.apibible.R;
 import com.example.apibible.bible.viewmodels.BiblesViewModel;
 
+import java.util.Objects;
+
 public class BooksFragment extends Fragment {
 
     RecyclerView recyclerView;
+    String bibleId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,6 +35,8 @@ public class BooksFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
+        bibleId = Objects.requireNonNull(getArguments()).getString("BibleId");
+
         return root;
     }
 
@@ -39,7 +45,7 @@ public class BooksFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         BiblesViewModel biblesViewModel = new ViewModelProvider.AndroidViewModelFactory(
-                getActivity().getApplication()).create(BiblesViewModel.class);;
+                Objects.requireNonNull(getActivity()).getApplication()).create(BiblesViewModel.class);
 
         // set up adapter
         BookAdapter.RecyclerViewClickListener listener = (view, position) -> {
@@ -57,8 +63,6 @@ public class BooksFragment extends Fragment {
         BookAdapter bookAdapter = new BookAdapter(listener);
         recyclerView.setAdapter(bookAdapter);
 
-        biblesViewModel.getAllBibleBooks().observe(this, bookList -> {
-            bookAdapter.setBooks(bookList);
-        });
+        biblesViewModel.getAllBibleBooks(bibleId).observe(this, bookAdapter::setBooks);
     }
 }

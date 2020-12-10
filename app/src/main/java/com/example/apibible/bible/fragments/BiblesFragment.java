@@ -24,6 +24,8 @@ import com.example.apibible.bible.viewmodels.BiblesViewModel;
 import com.example.apibible.book.BooksFragment;
 import com.example.apibible.util.SimpleItemTouchHelperCallback;
 
+import java.util.Objects;
+
 public class BiblesFragment extends Fragment {
 
     private BiblesViewModel biblesViewModel;
@@ -48,12 +50,22 @@ public class BiblesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // set up adapter
-        BibleAdapter.RecyclerViewClickListener listener = (view, position) -> {
+        BibleAdapter.RecyclerViewClickListener listener = (view, position, bibleId) -> {
             Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_LONG).show();
 
             Fragment fragment = new BooksFragment();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            Bundle args = new Bundle();
+            args.putString("BibleId", bibleId);
+            fragment.setArguments(args);
+
+            FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                            R.anim.slide_in,  // enter
+                            R.anim.fade_out,  // exit
+                            R.anim.fade_in,   // popEnter
+                            R.anim.slide_out  // popExit
+                    );
             fragmentTransaction.replace(R.id.container, fragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
@@ -64,24 +76,9 @@ public class BiblesFragment extends Fragment {
 
         // get viewModel instance
         biblesViewModel = new ViewModelProvider.AndroidViewModelFactory(
-                getActivity().getApplication()).create(BiblesViewModel.class);
+                Objects.requireNonNull(getActivity()).getApplication()).create(BiblesViewModel.class);
 
-        biblesViewModel.getAllBibles().observe(this, bibleList -> {
-            bibleAdapter.setBibles(bibleList);
-
-//            String bibleId;
-//
-//            for (int i = 0; i < bibleList.size(); i ++){
-//
-//                int finalI = i;
-//                bibleId = bibleList.get(i).getId();
-//                this.biblesViewModel.countAllBooks(bibleId).observe(this, number -> {
-//                    if(number >= 73) {
-//                        Log.i(bibleList.get(finalI).getName() + " books : ", number.toString());
-//                    }
-//                });
-//            }
-        });
+        biblesViewModel.getAllBibles().observe(this, bibleAdapter::setBibles);
 
         // set up touch helper for moving and swiping
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(bibleAdapter);

@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
@@ -24,7 +23,7 @@ public class ApiBibleRequest {
     private final String url_base = "https://api.scripture.api.bible";
     private final String api_key = "9bea9ab8db7fd98f1f0ebb9cd98b8001";
 
-    private Context context;
+    private final Context context;
 
     public ApiBibleRequest(Context context){
         this.context = context;
@@ -32,18 +31,17 @@ public class ApiBibleRequest {
 
 
     private void getResponse(String url, final VolleyCallback callback) {
-        
+
         JsonObjectRequest jsonReq = new JsonObjectRequest(Request.Method.GET, url, null,
-                (Response.Listener<JSONObject>) Response -> callback.onSuccessResponse(Response),
-                (Response.ErrorListener) e -> {
+                callback::onSuccessResponse,
+                e -> {
                     e.printStackTrace();
                     Toast.makeText(context, e + "error", Toast.LENGTH_LONG).show();
-                })
-        {
+                }) {
             // set headers
             @Override
-            public Map < String, String > getHeaders() throws AuthFailureError {
-                Map < String, String > params = new HashMap<>();
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
                 params.put("api-key", api_key);
                 return params;
             }

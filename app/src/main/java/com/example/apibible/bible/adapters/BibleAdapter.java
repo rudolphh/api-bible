@@ -20,6 +20,7 @@ import com.example.apibible.util.ItemTouchHelperAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
         implements ItemTouchHelperAdapter {
@@ -52,21 +53,24 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
     public void onBindViewHolder(@NonNull BibleHolder holder, int position) {
 
         Bible currentBible = bibles.get(position);
-        boolean isFavorite = currentBible.getAdditionalProperties().get("FavoriteChecked").equals(true);
+        holder.setBible(currentBible);
+
+        // check whether the current bible in the holder is a favorite
+        boolean isFavorite = Objects.equals(currentBible.getAdditionalProperties().get("FavoriteChecked"), true);
         Log.i("Current FavoriteChecked", "Current FavoriteChecked for " + currentBible.getName() + " - " + isFavorite);
 
+        // set the holder's favorite star accordingly within the holder
         holder.tb_fav.setChecked(isFavorite);
 
+        // when the favorite star is clicked, set the FavoriteChecked property of the current bible
         holder.tb_fav.setOnClickListener(view -> {
             currentBible.setAdditionalProperty("FavoriteChecked", true);
             Log.i("FavoriteChecked", "On Bible : " + currentBible.getName() + " - true");
         });
 
-        if(holder instanceof BibleHolder) {
-            holder.tvName.setText(currentBible.getName());
-            holder.tvAbbrev.setText(currentBible.getAbbreviation());
-            holder.tvDesc.setText(currentBible.getDescription());
-        }
+        holder.tvName.setText(currentBible.getName());
+        holder.tvAbbrev.setText(currentBible.getAbbreviation());
+        holder.tvDesc.setText(currentBible.getDescription());
     }
 
     @Override
@@ -105,12 +109,14 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
     }
 
     public interface RecyclerViewClickListener {
-        void onClick(View view, int position);
+        void onClick(View view, int position, String bibleId);
     }
 
     static class BibleHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private View bibleView;
+        private Bible bible;
+
         private RecyclerViewClickListener mListener;
 
         private ToggleButton tb_fav;
@@ -135,7 +141,15 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
 
         @Override
         public void onClick(View view) {
-            mListener.onClick(view, getAdapterPosition());
+            mListener.onClick(view, getAdapterPosition(), bible.getId());
+        }
+
+        public void setBible(Bible aBible){
+            this.bible = aBible;
+        }
+
+        public Bible getBible(){
+            return this.bible;
         }
     }
 }

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.os.Bundle;
 
 import com.example.apibible.bible.fragments.BiblesFragment;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // render Bibles fragment (show all bibles)
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
@@ -31,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
         Fragment newFragment = new BiblesFragment();
         //It will replace the fragment content view to container of main activity
         ft.replace(R.id.container, newFragment);
-        //BiblesFragment is added to back stack with it's name as a tag
-        ft.addToBackStack(BiblesFragment.class.getSimpleName());
         ft.commitAllowingStateLoss();
 
     }// end onCreate
