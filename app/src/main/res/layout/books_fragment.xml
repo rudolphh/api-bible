@@ -6,10 +6,13 @@
     android:layout_marginTop="?attr/actionBarSize"
     tools:context=".book.BooksFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- Books recyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:paddingBottom="8dp"
+        android:background="@color/colorNeutralLightGray"
+        tools:listitem="@layout/book_item" />
 
 </FrameLayout>

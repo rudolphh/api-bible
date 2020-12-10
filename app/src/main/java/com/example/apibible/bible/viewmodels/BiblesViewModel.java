@@ -31,4 +31,8 @@ public class BiblesViewModel extends AndroidViewModel {
 
         return bibleRepository.getBookCount(bibleId);
     }
+
+    public MutableLiveData<List<Book>> getAllBibleBooks(String bibleId){
+        return bibleRepository.getAllBibleBooks(bibleId);
+    }
 }
