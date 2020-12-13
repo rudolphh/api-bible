@@ -106,7 +106,7 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
     }
 
     public interface RecyclerViewClickListener {
-        void onClick(View view, int position, String bibleId);
+        void onClick(String bibleId);
     }
 
     static class BibleHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -138,7 +138,7 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
 
         @Override
         public void onClick(View view) {
-            mListener.onClick(view, getAdapterPosition(), bible.getId());
+            mListener.onClick(bible.getId());
         }
 
         public void setBible(Bible aBible){

@@ -54,8 +54,7 @@ public class BiblesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         // set up adapter
-        BibleAdapter.RecyclerViewClickListener listener = (view, position, bibleId) -> {
-            Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_LONG).show();
+        BibleAdapter.RecyclerViewClickListener listener = (bibleId) -> {
 
             Fragment fragment = new BooksFragment();
             Bundle args = new Bundle();
@@ -71,7 +70,7 @@ public class BiblesFragment extends Fragment {
                             R.anim.slide_out  // popExit
                     );
             fragmentTransaction.replace(R.id.container, fragment);
-            fragmentTransaction.addToBackStack(BooksFragment.class.getSimpleName());
+            fragmentTransaction.addToBackStack(BiblesFragment.class.getSimpleName());
             fragmentTransaction.commit();
         };
 
@@ -82,9 +81,9 @@ public class BiblesFragment extends Fragment {
         biblesViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 Objects.requireNonNull(getActivity()).getApplication()).create(BiblesViewModel.class);
 
-        if(allBibles.size() > 0){
-            bibleAdapter.setBibles(allBibles);
-        } else {
+//        if(allBibles.size() > 0){
+//            bibleAdapter.setBibles(allBibles);
+//        } else {
             biblesViewModel.getAllBibles().observe(this, bibleList -> {
                 for(Bible bible : bibleList){
                     bible.setAdditionalProperty("FavoriteChecked", false);
@@ -92,7 +91,7 @@ public class BiblesFragment extends Fragment {
                 bibleAdapter.setBibles(bibleList);
                 allBibles = bibleList;
             });
-        }
+//        }
 
         // set up touch helper for moving and swiping
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(bibleAdapter);

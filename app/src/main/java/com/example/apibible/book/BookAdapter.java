@@ -18,11 +18,10 @@ import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder> {
 
-    private static RecyclerViewClickListener mListener;
-
+    private static BookViewClickListener mListener;
     private List<Book> books = new ArrayList<>();
 
-    public BookAdapter(RecyclerViewClickListener listener){
+    public BookAdapter(BookViewClickListener listener){
         mListener = listener;
     }
 
@@ -35,16 +34,18 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder> {
 
         Log.i("createViewHolder", "create view holder called");
 
-        return new BookHolder(bookView, mListener);
+        return new BookHolder(bookView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BookHolder holder, int position) {
 
         Book currentBook = books.get(position);
+        holder.setBook(currentBook);
 
         holder.tvName.setText(currentBook.getName());
         holder.tvAbbrev.setText(currentBook.getAbbreviation());
+        holder.tvDesc.setText(currentBook.getNameLong());
     }
 
     @Override
@@ -57,32 +58,35 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder> {
         notifyDataSetChanged();
     }
 
-    public interface RecyclerViewClickListener {
-        void onClick(View view, int position);
+    public interface BookViewClickListener {
+        void onClick(Book book);
     }
 
     static class BookHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private View bookView;
-        private RecyclerViewClickListener mListener;
+        private Book book;
 
         private TextView tvName;
         private TextView tvAbbrev;
+        private TextView tvDesc;
 
-        public BookHolder(@NonNull View itemView, RecyclerViewClickListener listener) {
+        public BookHolder(@NonNull View itemView) {
             super(itemView);
-            mListener = listener;
+            itemView.setOnClickListener(this);
 
-            bookView = itemView;// handle on the bible cardView item
-            bookView.setOnClickListener(this);
-
-            tvName = bookView.findViewById(R.id.tv_name);
-            tvAbbrev = bookView.findViewById(R.id.tv_abbrev);
+            tvName = itemView.findViewById(R.id.tv_name);
+            tvAbbrev = itemView.findViewById(R.id.tv_abbrev);
+            tvDesc = itemView.findViewById(R.id.tv_desc);
         }
 
         @Override
         public void onClick(View view) {
-            mListener.onClick(view, getAdapterPosition());
+            mListener.onClick(this.book);
         }
+
+        public void setBook(Book book) {
+            this.book = book;
+        }
+
     }
 }

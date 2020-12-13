@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.apibible.bible.models.Bible;
 import com.example.apibible.book.models.Book;
+import com.example.apibible.chapter.models.Chapter;
 import com.example.apibible.network.ApiBibleRequest;
 import com.google.gson.Gson;
 
@@ -97,6 +98,39 @@ public class BibleRepository {
                     bookList.add(book);
                 }
                 mutableLiveData.setValue(bookList);
+
+            } catch (JSONException e){
+                e.printStackTrace();
+            }
+
+        });
+
+        return mutableLiveData;
+    }
+
+
+    public MutableLiveData<List<Chapter>> getAllBibleBookChapters(String bibleId, String bookId){
+
+        MutableLiveData<List<Chapter>> mutableLiveData = new MutableLiveData<>();
+
+        apiBibleRequest.getBibleBookChapters(bibleId, bookId, response -> {
+
+            try{
+                Gson gson = new Gson();
+
+                // Getting JSON Array node
+                JSONArray chapters = response.getJSONArray("data");
+                List<Chapter> chapterList = new ArrayList<>(chapters.length());
+
+                // looping through All Bibles
+                for (int i = 0; i < chapters.length(); i++) {
+
+                    JSONObject b = chapters.getJSONObject(i);
+                    Chapter chapter = gson.fromJson(b.toString(), Chapter.class);
+                    Log.i(BibleRepository.class.getSimpleName(), chapter.getData().getBibleId());
+                    chapterList.add(chapter);
+                }
+                mutableLiveData.setValue(chapterList);
 
             } catch (JSONException e){
                 e.printStackTrace();
