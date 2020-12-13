@@ -1,9 +1,9 @@
-package com.example.apibible.chapter;
+package com.example.apibible.chapter.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Next {
+public class Previous {
 
     @SerializedName("id")
     @Expose

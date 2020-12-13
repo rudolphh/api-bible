@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.apibible.bible.BibleRepository;
 import com.example.apibible.bible.models.Bible;
-import com.example.apibible.book.Book;
+import com.example.apibible.book.models.Book;
 
 import java.util.List;
 

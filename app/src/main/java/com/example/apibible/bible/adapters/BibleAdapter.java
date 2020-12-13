@@ -80,9 +80,6 @@ public class BibleAdapter extends RecyclerView.Adapter<BibleAdapter.BibleHolder>
 
     public void setBibles(List<Bible> bibles){
         this.bibles = bibles;
-        for(Bible bible : bibles){
-            bible.setAdditionalProperty("FavoriteChecked", false);
-        }
         notifyDataSetChanged();
     }
 

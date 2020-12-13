@@ -80,8 +80,14 @@ public class ApiBibleRequest {
 
 
     //v1/bibles/{bibleId}/books
+
     public void getAllBibleBooks(String bibleId, VolleyCallback callback){
+        getAllBibleBooks(bibleId, false, callback);
+    }
+
+    public void getAllBibleBooks(String bibleId, boolean includeChapters, VolleyCallback callback){
         String url = url_base + "/v1/bibles/" + bibleId + "/books";
+        url += includeChapters ? "?include-chapters=true" : "";
         getResponse(url, callback);
     }
 

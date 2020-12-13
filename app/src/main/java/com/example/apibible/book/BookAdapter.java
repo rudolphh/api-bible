@@ -1,24 +1,19 @@
 package com.example.apibible.book;
 
-import android.content.Context;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apibible.R;
-import com.example.apibible.bible.models.Bible;
-import com.example.apibible.book.Book;
+import com.example.apibible.book.models.Book;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder> {
@@ -48,10 +43,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookHolder> {
 
         Book currentBook = books.get(position);
 
-        if(holder instanceof BookHolder) {
-            holder.tvName.setText(currentBook.getName());
-            holder.tvAbbrev.setText(currentBook.getAbbreviation());
-        }
+        holder.tvName.setText(currentBook.getName());
+        holder.tvAbbrev.setText(currentBook.getAbbreviation());
     }
 
     @Override

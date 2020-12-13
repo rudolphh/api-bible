@@ -1,4 +1,4 @@
-package com.example.apibible.book;
+package com.example.apibible.book.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

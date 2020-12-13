@@ -1,4 +1,4 @@
-package com.example.apibible.book;
+package com.example.apibible.chapter;
 
 import android.os.Bundle;
 
@@ -17,21 +17,22 @@ import android.widget.Toast;
 
 import com.example.apibible.R;
 import com.example.apibible.bible.viewmodels.BiblesViewModel;
+import com.example.apibible.chapter.ChapterAdapter;
 
 import java.util.Objects;
 
-public class BooksFragment extends Fragment {
+public class ChaptersFragment extends Fragment {
 
     LayoutInflater layoutInflater;
     ViewGroup viewGroupContainer;
 
-    View booksFragment;
+    View chaptersFragment;
     RecyclerView recyclerView;
-    String bibleId;
+    String bookId;
 
     BiblesViewModel biblesViewModel;
-    BookAdapter.RecyclerViewClickListener listener;
-    BookAdapter bookAdapter;
+    ChapterAdapter.RecyclerViewClickListener listener;
+    ChapterAdapter chapterAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -39,26 +40,26 @@ public class BooksFragment extends Fragment {
         this.layoutInflater = inflater;
         this.viewGroupContainer = container;
 
-        inflateFragmentLayout(R.layout.books_fragment);
+        inflateFragmentLayout(R.layout.chapters_fragment);
         setupRecyclerView(R.id.recycler_view);
-        retrieveBibleId();
+        retrieveBookId(); 
 
-        return booksFragment;
+        return chaptersFragment;
     }
 
     private void inflateFragmentLayout(int resource){
-        booksFragment = layoutInflater.inflate(resource, viewGroupContainer, false);
+        chaptersFragment = layoutInflater.inflate(resource, viewGroupContainer, false);
     }
 
     private void setupRecyclerView(int resource){
-        recyclerView = booksFragment.findViewById(resource);
+        recyclerView = chaptersFragment.findViewById(resource);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
     }
 
-    private void retrieveBibleId(){
-        bibleId = Objects.requireNonNull(getArguments()).getString("BibleId");
+    private void retrieveBookId(){
+        bookId = Objects.requireNonNull(getArguments()).getString("BookId");
     }
 
 
@@ -67,10 +68,10 @@ public class BooksFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         instantiateBiblesViewModel();
-        createBookHolderItemClickListener();
-        instantiateBookAdapter();
+        createChapterHolderItemClickListener();
+        instantiateChapterAdapter();
         setRecyclerViewAdapter();
-        setAllBibleBooksInBookAdapter();
+        setAllBibleBooksInChapterAdapter();
     }
 
     private void instantiateBiblesViewModel(){
@@ -78,7 +79,7 @@ public class BooksFragment extends Fragment {
                 Objects.requireNonNull(getActivity()).getApplication()).create(BiblesViewModel.class);
     }
 
-    private void createBookHolderItemClickListener(){
+    private void createChapterHolderItemClickListener(){
 
         listener = (view, position) -> {
             Toast.makeText(getContext(), "Position " + position, Toast.LENGTH_LONG).show();
@@ -93,16 +94,16 @@ public class BooksFragment extends Fragment {
         };
     }
 
-    private void instantiateBookAdapter(){
-        bookAdapter = new BookAdapter(listener);
+    private void instantiateChapterAdapter(){
+        chapterAdapter = new ChapterAdapter(listener);
     }
 
     private void setRecyclerViewAdapter(){
-        recyclerView.setAdapter(bookAdapter);
+        recyclerView.setAdapter(chapterAdapter);
     }
 
-    private void setAllBibleBooksInBookAdapter(){
-        biblesViewModel.getAllBibleBooks(bibleId).observe(this, bookAdapter::setBooks);
+    private void setAllBibleBooksInChapterAdapter(){
+        //biblesViewModel.getAllBibleBooks(bookId).observe(this, chapterAdapter::setChapters);
 
     }
 }

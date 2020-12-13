@@ -20,10 +20,13 @@ import android.widget.Toast;
 
 import com.example.apibible.R;
 import com.example.apibible.bible.adapters.BibleAdapter;
+import com.example.apibible.bible.models.Bible;
 import com.example.apibible.bible.viewmodels.BiblesViewModel;
 import com.example.apibible.book.BooksFragment;
 import com.example.apibible.util.SimpleItemTouchHelperCallback;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class BiblesFragment extends Fragment {
@@ -31,6 +34,7 @@ public class BiblesFragment extends Fragment {
     private BiblesViewModel biblesViewModel;
     private RecyclerView recyclerView;
     private View root;
+    private List<Bible> allBibles = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -67,7 +71,7 @@ public class BiblesFragment extends Fragment {
                             R.anim.slide_out  // popExit
                     );
             fragmentTransaction.replace(R.id.container, fragment);
-            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.addToBackStack(BooksFragment.class.getSimpleName());
             fragmentTransaction.commit();
         };
 
@@ -78,7 +82,17 @@ public class BiblesFragment extends Fragment {
         biblesViewModel = new ViewModelProvider.AndroidViewModelFactory(
                 Objects.requireNonNull(getActivity()).getApplication()).create(BiblesViewModel.class);
 
-        biblesViewModel.getAllBibles().observe(this, bibleAdapter::setBibles);
+        if(allBibles.size() > 0){
+            bibleAdapter.setBibles(allBibles);
+        } else {
+            biblesViewModel.getAllBibles().observe(this, bibleList -> {
+                for(Bible bible : bibleList){
+                    bible.setAdditionalProperty("FavoriteChecked", false);
+                }
+                bibleAdapter.setBibles(bibleList);
+                allBibles = bibleList;
+            });
+        }
 
         // set up touch helper for moving and swiping
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(bibleAdapter);

@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.apibible.bible.models.Bible;
-import com.example.apibible.book.Book;
+import com.example.apibible.book.models.Book;
 import com.example.apibible.network.ApiBibleRequest;
 import com.google.gson.Gson;
 
