@@ -114,25 +114,25 @@ public class ApiBibleRequest {
 
     //v1​/bibles​/{bibleId}​/books​/{bookId}​/chapters
     public void getBibleBookChapters(String bibleId, String bookId, VolleyCallback callback){
-        String url = url_base + "v1/bibles/" + bibleId + "/books/" + bookId + "/chapters";
+        String url = url_base + "/v1/bibles/" + bibleId + "/books/" + bookId + "/chapters";
         getResponse(url, callback);
     }
 
     //v1​/bibles​/{bibleId}​/chapters​/{chapterId}
     public void getBibleChapter(String bibleId, String chapterId, VolleyCallback callback){
-        String url = url_base + "v1/bibles/" + bibleId + "/chapters/" + chapterId;
+        String url = url_base + "/v1/bibles/" + bibleId + "/chapters/" + chapterId;
         getResponse(url, callback);
     }
 
     //v1​/audio-bibles​/{audioBibleId}​/books​/{bookId}​/chapters
     public void getAudioBibleBookChapters(String audioBibleId, String bookId, VolleyCallback callback){
-        String url = url_base + "v1/audio-bibles/" + audioBibleId + "/books/" + bookId + "/chapters";
+        String url = url_base + "/v1/audio-bibles/" + audioBibleId + "/books/" + bookId + "/chapters";
         getResponse(url, callback);
     }
 
     //v1​/audio-bibles​/{audioBibleId}​/chapters​/{chapterId}
     public void getAudioBibleChapter(String audioBibleId, String chapterId, VolleyCallback callback){
-        String url = url_base + "v1/audio-bibles/" + audioBibleId + "/chapters/" + chapterId;
+        String url = url_base + "/v1/audio-bibles/" + audioBibleId + "/chapters/" + chapterId;
         getResponse(url, callback);
     }
 
@@ -142,19 +142,19 @@ public class ApiBibleRequest {
 
     //v1​/bibles​/{bibleId}​/books​/{bookId}​/sections
     public void getBibleBookSections(String bibleId, String bookId, VolleyCallback callback){
-        String url = url_base + "v1/bibles/" + bibleId + "/books/" + bookId + "/sections";
+        String url = url_base + "/v1/bibles/" + bibleId + "/books/" + bookId + "/sections";
         getResponse(url, callback);
     }
 
     //v1​/bibles​/{bibleId}​/chapters​/{chapterId}​/sections
     public void getBibleChapterSections(String bibleId, String chapterId, VolleyCallback callback){
-        String url = url_base + "v1/bibles/" + bibleId + "/chapters/" + chapterId + "/sections";
+        String url = url_base + "/v1/bibles/" + bibleId + "/chapters/" + chapterId + "/sections";
         getResponse(url, callback);
     }
 
     //v1​/bibles​/{bibleId}​/sections​/{sectionId}
     public void getBibleSection(String bibleId, String sectionId, VolleyCallback callback){
-        String url = url_base + "v1/bibles/" + bibleId + "/sections/" + sectionId;
+        String url = url_base + "/v1/bibles/" + bibleId + "/sections/" + sectionId;
         getResponse(url, callback);
     }
 
@@ -164,7 +164,7 @@ public class ApiBibleRequest {
 
     //v1​/bibles​/{bibleId}​/passages​/{passageId}
     public void getBiblePassage(String bibleId, String passageId, VolleyCallback callback){
-        String url = url_base + "v1/bibles/" + bibleId + "/passages/" + passageId;
+        String url = url_base + "/v1/bibles/" + bibleId + "/passages/" + passageId;
         getResponse(url, callback);
     }
 
@@ -174,13 +174,13 @@ public class ApiBibleRequest {
 
     //v1​/bibles​/{bibleId}​/chapters​/{chapterId}​/verses
     public void getBibleChapterVerses(String bibleId, String chapterId, VolleyCallback callback){
-        String url = url_base + "v1/bibles/" + bibleId + "/chapters/" + chapterId + "/sections";
+        String url = url_base + "/v1/bibles/" + bibleId + "/chapters/" + chapterId + "/sections";
         getResponse(url, callback);
     }
 
     //v1​/bibles​/{bibleId}​/verses​/{verseId}
     public void getBibleVerse(String bibleId, String passageId, VolleyCallback callback){
-        String url = url_base + "v1/bibles/" + bibleId + "/passages/" + passageId;
+        String url = url_base + "/v1/bibles/" + bibleId + "/passages/" + passageId;
         getResponse(url, callback);
     }
 

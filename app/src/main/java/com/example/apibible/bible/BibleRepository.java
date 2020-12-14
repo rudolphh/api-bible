@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.apibible.bible.models.Bible;
 import com.example.apibible.book.models.Book;
 import com.example.apibible.chapter.models.Chapter;
+import com.example.apibible.chapter.models.Data;
 import com.example.apibible.network.ApiBibleRequest;
 import com.google.gson.Gson;
 
@@ -116,6 +117,47 @@ public class BibleRepository {
         apiBibleRequest.getBibleBookChapters(bibleId, bookId, response -> {
 
             try{
+
+                // Getting JSON Array node
+                JSONArray chapters = response.getJSONArray("data");
+                List<Chapter> chapterList = new ArrayList<>(chapters.length());
+
+                // looping through All Bibles
+                for (int i = 0; i < chapters.length(); i++) {
+
+                    JSONObject b = chapters.getJSONObject(i);
+                    Chapter chapter = new Chapter();
+                    Data data = new Data();
+
+                    data.setId(b.getString("id"));
+                    data.setBibleId(b.getString("bibleId"));
+                    data.setNumber(b.getString("number"));
+                    data.setBookId(b.getString("bookId"));
+                    data.setReference(b.getString("reference"));
+
+                    chapter.setData(data);
+
+                    Log.i("chapter-data", chapter.getData().getNumber());
+                    chapterList.add(chapter);
+                }
+                mutableLiveData.setValue(chapterList);
+
+            } catch (JSONException e){
+                e.printStackTrace();
+            }
+
+        });
+
+        return mutableLiveData;
+    }
+
+    public MutableLiveData<List<Chapter>> getBibleBookChapter(String bibleId, String chapterId){
+
+        MutableLiveData<List<Chapter>> mutableLiveData = new MutableLiveData<>();
+
+        apiBibleRequest.getBibleChapter(bibleId, chapterId, response -> {
+
+            try{
                 Gson gson = new Gson();
 
                 // Getting JSON Array node
@@ -127,7 +169,7 @@ public class BibleRepository {
 
                     JSONObject b = chapters.getJSONObject(i);
                     Chapter chapter = gson.fromJson(b.toString(), Chapter.class);
-                    Log.i(BibleRepository.class.getSimpleName(), chapter.getData().getBibleId());
+                    //Log.i(BibleRepository.class.getSimpleName(), chapter.getData().getBibleId());
                     chapterList.add(chapter);
                 }
                 mutableLiveData.setValue(chapterList);

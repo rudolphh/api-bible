@@ -32,7 +32,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterH
 
         Log.i("createViewHolder", "create view holder called");
 
-        return new ChapterAdapter.ChapterHolder(chapterView);
+        return new ChapterHolder(chapterView);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ChapterH
 
     @Override
     public int getItemCount() {
-        return 0;
+        return chapters.size();
     }
 
     public void setChapters(List<Chapter> chapters){

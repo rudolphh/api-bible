@@ -59,7 +59,7 @@ public class BooksFragment extends Fragment {
 
         BookAdapter.BookViewClickListener listener = createBookViewClickListener();
         BookAdapter bookAdapter = new BookAdapter(listener);
-        recyclerView.setAdapter(new BookAdapter(listener));
+        recyclerView.setAdapter(bookAdapter);
 
         biblesViewModel.getAllBibleBooks(bibleId).observe(this, bookAdapter::setBooks);
     }
